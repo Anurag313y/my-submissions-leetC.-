@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int dp[5005][301];
+    int help( vector<int>& wt, int amt ,int n){
+        if(n==0 || amt==0 ) return amt==0? 1 : 0;
+        
+        if(dp[amt][n]!=-1) return dp[amt][n];
+        
+        if(wt[n-1]>amt)
+            return dp[amt][n] = help(wt, amt, n-1);
+        
+        return dp[amt][n] = help(wt, amt,n-1)+ help(wt, amt-wt[n-1],n);
+    }
+    int change(int amt, vector<int>& wt) {
+        memset(dp,-1,sizeof dp);
+        if(amt==0) return 1;
+        int n = wt.size(); 
+        if(n==0) return 0;
+        return help(wt,amt,n);
+    }
+};
