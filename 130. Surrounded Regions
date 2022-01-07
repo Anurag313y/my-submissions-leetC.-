@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void dfs(vector<vector<char>>& board,int r,int c,int rowsize,int colsize){
+        if(r<0||c<0||r==rowsize||c==colsize||board[r][c]!='O') return;
+        board[r][c] = 'R';
+        dfs(board,r+1,c,rowsize,colsize);
+          dfs(board,r-1,c,rowsize,colsize);
+          dfs(board,r,c+1,rowsize,colsize);
+          dfs(board,r,c-1,rowsize,colsize);
+        
+    }
+    
+    void solve(vector<vector<char>>& board) {
+        int row = board.size(),col = board[0].size();
+        if(!row || !col) return ;
+        
+        for(int i=0;i<col;i++) dfs(board,0,i,row,col), dfs(board,row-1,i,row,col);
+        for(int i=0;i<row;i++) dfs(board,i,0,row,col), dfs(board,i,col-1,row,col);
+        
+        for(int i=0;i<row;i++){
+            
+            for(int j=0;j<col;j++){
+                 if(board[i][j]=='O') board[i][j]='X';
+                else if(board[i][j]=='R') board[i][j]='O';
+            }
+        }
+        
+        
+    }
+};
